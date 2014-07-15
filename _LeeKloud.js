@@ -178,7 +178,6 @@ function nextStep() {
 		}
 		return;
 	}
-
 	open(_LKfolder);
 	setTimeout(getScripts, 2000);
 }
