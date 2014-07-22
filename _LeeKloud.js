@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-var __version = "1.1.6i";
+var __version = "1.1.7";
 var _Vname = "LeeKloud " + __version;
 
 process.title = _Vname;
@@ -101,7 +101,7 @@ function main() {
 						pass: password
 					},
 					success: function(res, data) {
-						if (data == "0") {
+						if (data == "1") {
 							var dataCookie = mkdataCookie(res.headers["set-cookie"]);
 							setFileContent(".temp/cookie", JSON.stringify(dataCookie));
 

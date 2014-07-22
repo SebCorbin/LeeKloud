@@ -1,3 +1,5 @@
+[1.1.7]
+- Correction du bug empêchant la connexion dû à la MaJ du 20 juillet 2014 du site. (Faites l'installation tout de suite).
 [1.1.6i]
 - Correction du bug empêchant la validation de .leekloud-update (apparu lors de la version 1.1.6f et 1.1.6h).
 [1.1.6h]
