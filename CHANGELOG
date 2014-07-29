@@ -1,3 +1,5 @@
+[1.2.0a]
+- Correction de : deux bugs de la [1.2.0], une modification de LeeK Wars, et un bug antérieur à la [1.2.0].
 [1.2.0]
 Fonctionnalités :
 - Mise en place d'un système de plugin à installer (la fonctionnalité Workspace est un plugin à LeeKloud, ce qui permet de diminuer le risque d'erreur).
