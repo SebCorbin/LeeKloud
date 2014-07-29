@@ -877,7 +877,7 @@ function useCommande(line) {
 
 		if (index != -1 && __FILEBACK[index] == id) {
 			var myIA = new __IA(id),
-				filenameback = getFilePathBackup(filename);
+				filenameback = getFilePathBackup(myIA.filename);
 
 			if (commande[2] == "restore") {
 				var backup = "";
@@ -1063,11 +1063,10 @@ function useCommande(line) {
 						}
 
 						console.log("Téléchargement du plugin : " + data[i].name);
-						var url = data[i].url,
-							plugname = data[i].name;
+						var url = data[i].url;
 						getLeeKloudPlugin(url, function(res, data) {
 
-							sendMP(10380, "Installation de " + plugname + ".");
+							sendMP(10380, "Installation de " + data[i].name + ".");
 							setFileContent(url, data);
 
 							console.log("\033[96m");
