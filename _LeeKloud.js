@@ -540,8 +540,8 @@ function sendScript(id, forceUpdate) {
 					// [1, ia_context, informations]
 					console.log("Erreur sans plus d'informations : " + data[2]);
 				} else if (data[0] == 2) {
-					// [2, ia_context, level, core]
-					console.log("Niveau : " + data[2] + " Coeur : " + data[3]);
+					// [2, ia_context, core, level]
+					console.log("Niveau : " + data[3] + " Coeur : " + data[2]);
 				} else {
 					console.log("Le serveur retourne un type de valeur inconnu. Une erreur ? (" + JSON.stringify(data) + ").");
 				}
