@@ -2,4 +2,9 @@
 	"name": "Workspace",
 	"description": "Permet d'avoir plusieurs fichiers pour une IA, (vous pouvez avoir des fichiers en commun).",
 	"url": "Plugin/Workspace.js"
+},
+{
+	"name": "Prettydiff",
+	"description": "Permet de comparer des fichiers (avec une interface visuelle).",
+	"url": "Plugin/Prettydiff.js"
 }]

@@ -1,10 +1,41 @@
+[1.2.0]
+Fonctionnalités :
+- Mise en place d'un système de plugin à installer (la fonctionnalité Workspace est un plugin à LeeKloud, ce qui permet de diminuer le risque d'erreur).
+- Mise en place de la première version de Workspace (.plugin install WorkSpace).
+- Mise en place du plugin Prettydiff qui permet de comparer deux fichiers ensemble.
+- Le fichier config workspace.json accepte les commentaires.
+- La compilation suit l'ordre des fichiers indiqués.
+- Installation forcé du plugin WorkSpace et Prettydiff si aucun plugin est présent.
+- Le fichier "repository.json" regroupe la liste des plugins disponibles avec le nom, la description, le chemin vers le fichier.
+- Gestion des erreurs : Pour éviter de générer un cumule des erreurs, LeeKloud s'arrête à la première erreur (voir 1.1.6f).
+- Suite à la version 1.1.7 en cas de problème de connexion, vous pouvez forcer la connexion ou forcer une mise à jour.
+- Pour éviter des CRASH, LeeKloud ne peut pas être lancé en "mode rapide" lors du premier lancement.
+- Système de référencement des utilisateurs de LeeKloud. :B
+- LeeKloud s'actualise tous les quarts d'heures pour éviter l'erreur "bad token".
+LeeKloud système d'IA (natif) :
+- Si le script n'arrive pas à récupérer les variables nécessaires à son exécution, il s'arrête.
+- Correction d'un bug provoquant une grande allocation de la mémoire du fichier ".temp/hash".
+- Correction d'un bug lors de la suppression du fichier ".temp/hash" alors que les IA sont encore présentes.
+- Amélioration de l'affichage des différences avec Prettydiff.
+- Modification de l'envoi de l'IA pour s'adapter au nouveau système d'envoi.
+Commandes :
+- L'historique des commandes entre deux sessions passe de 20 à 40.
+- Correction d'un problème génant qui pouvait sauvegarder votre mot de passe dans l'historique.
+- .plugin {install / list / update / remove} : Gestion des plugins (Ajout de la commande .plugin pour gérer les plugins).
+- .create [new_name] : Créer une IA avec le nom [new_name].
+- .refresh : actualise les IA dans le dossier `IA/`.
+- La commande ".logout" en plus de supprimer les fichiers sur votre ordinateur envois une requête de déconnexion.
+- La commande "open" ouvre le répertoire de LeeKloud.
+- La commande "clear" vide la console.
+- Suppression de la commande "MP".
+Affichage :
+- Modification de la présentation de l'aide.
+- Amélioration de la coloration du CHANGELOG (à la suite de version 1.1.6i).
 [1.1.7]
 - Correction du bug empêchant la connexion dû à la MaJ du 20 juillet 2014 du site. (Faites l'installation tout de suite).
 [1.1.6i]
 - Correction du bug empêchant la validation de .leekloud-update (apparu lors de la version 1.1.6f et 1.1.6h).
-[1.1.6h]
 - Correction du bug provoquant une mise à jour automatique (apparu lors de la version 1.1.6f).
-[1.1.6g]
 - Correction du bug de coloration qui est apparu sur le changelog de la version 1.1.6f.
 [1.1.6f]
 - Les erreurs sont interceptées, ce qui évite la fermeture brutale et rapide de LeeKloud.

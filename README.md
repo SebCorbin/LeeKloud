@@ -1,4 +1,4 @@
-﻿LeeKloud 1.1.7
+﻿LeeKloud 1.2.0
 ========
 
 Une API pour synchroniser vos IA qui sont sur votre ordinateur avec le site [leekwars.com](leekwars.com).
@@ -31,11 +31,6 @@ Emplacement trouvez le dossier .LeeKloud/ dans :
  - Sous Linux : regarder dans le répertoire HOME `echo $HOME` (~/Username).
  - Sous Windows : regarder dans %APPDATA% ou %USERPROFILE% (C:/Users/Username/AppData/Roaming).
  - Sous Max : regarder dans le HOMEPATH (/Users/Username).
-
-##A savoir
-
-Modifier la variable `compare_cmd` ligne 21 pour pouvoir utiliser la fonction 'compare'. Sous windows installer [WinMerge](http://winmerge.org/).
-
 
 
 ###Problème avec la commande open
