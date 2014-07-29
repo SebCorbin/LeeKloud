@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-var __version = "1.2.0a";
+var __version = "1.2.0b";
 var _Vname = "LeeKloud " + __version;
 
 process.title = _Vname;
@@ -216,7 +216,6 @@ function getPlugins() {
 		var stat = fs.statSync(_Plugfolder + file);
 		return file.substr(-3) === ".js" && stat.isFile();
 	});
-	console.log(files);
 
 	if (files.length === 0) {
 		console.log("Aucun plugin à charger.");
@@ -1307,7 +1306,7 @@ var __CMD_PLUGINS = [],
 		".open ", ".compare ", ".create ", ".rename ",
 		".sandbox ", ".changelog", ".forceupdate ",
 		".refresh", ".logout", ".plugin ", ".backup ",
-		".challenge ", ".help"
+		".challenge ", ".help", ".leekloud-update"
 	].concat("open / clear / twitter / cfichat / forum / MP / leek / doc ".split(" / "));
 
 ////--------------------------------------------------------------------------------
