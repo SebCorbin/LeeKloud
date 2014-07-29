@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-var __version = "1.2.0";
+var __version = "1.2.0a";
 var _Vname = "LeeKloud " + __version;
 
 process.title = _Vname;
@@ -825,10 +825,10 @@ function showListIA() {
 	});
 }
 
-function callbackFight(res, data, context) {
-	if (res.headers.location && res.headers.location.indexOf("/fight/") != -1) {
-		open("http://leekwars.com/" + res.headers.location);
-		console.log("Combat généré : " + res.headers.location);
+function callbackFight(res, data) {
+	if (parseInt(data) != NaN) {
+		open("http://leekwars.com/fight/" + data);
+		console.log("Combat généré : " + data);
 	} else {
 		data = (data) ? data.replace("\n", "") : data;
 		console.log("Le combat n'a pas été généré (" + data + ").");
@@ -877,7 +877,7 @@ function useCommande(line) {
 
 		if (index != -1 && __FILEBACK[index] == id) {
 			var myIA = new __IA(id),
-				filenameback = getFilePathBackup(filename);
+				filenameback = getFilePathBackup(myIA.filename);
 
 			if (commande[2] == "restore") {
 				var backup = "";
