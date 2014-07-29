@@ -1063,10 +1063,11 @@ function useCommande(line) {
 						}
 
 						console.log("Téléchargement du plugin : " + data[i].name);
-						var url = data[i].url;
+						var url = data[i].url,
+							plugname = data[i].name;
 						getLeeKloudPlugin(url, function(res, data) {
 
-							sendMP(10380, "Installation de " + data[i].name + ".");
+							sendMP(10380, "Installation de " + plugname + ".");
 							setFileContent(url, data);
 
 							console.log("\033[96m");
