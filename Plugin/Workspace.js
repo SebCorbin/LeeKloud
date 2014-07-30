@@ -491,7 +491,7 @@ var JSON_config = {
 					left = config[i].files[j].split("*").shift().split("/").slice(0, -1).join("/");
 					left = node_path.resolve(_WKfolder, left);
 
-					regex = (recursive) ? ".+" : "[^\\\\]+";
+					regex = (recursive) ? ".+" : "[^\\\\////]+";
 					regex = new RegExp("^" + RegExp.escape(config[i].files[j]).replace("\\*", regex) + "$", "i");
 
 					rule = [left, regex];
