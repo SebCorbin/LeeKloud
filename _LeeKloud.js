@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-var __version = "1.2.0a";
+var __version = "1.2.0b";
 var _Vname = "LeeKloud " + __version;
 
 process.title = _Vname;
@@ -216,7 +216,6 @@ function getPlugins() {
 		var stat = fs.statSync(_Plugfolder + file);
 		return file.substr(-3) === ".js" && stat.isFile();
 	});
-	console.log(files);
 
 	if (files.length === 0) {
 		console.log("Aucun plugin à charger.");
@@ -230,7 +229,7 @@ function getPlugins() {
 
 			console.log("Chargement du plugin : \033[95m" + name + "\033[00m\n");
 			try {
-				var plug = require("./" + _Plugfolder + file),
+				var plug = require(fs.realpathSync("./" + _Plugfolder + file)),
 					c = null;
 
 				plug.hash = sha256(getFileContent(_Plugfolder + file));
@@ -541,8 +540,8 @@ function sendScript(id, forceUpdate) {
 					// [1, ia_context, informations]
 					console.log("Erreur sans plus d'informations : " + data[2]);
 				} else if (data[0] == 2) {
-					// [2, ia_context, level, core]
-					console.log("Niveau : " + data[2] + " Coeur : " + data[3]);
+					// [2, ia_context, core, level]
+					console.log("Niveau : " + data[3] + " Coeur : " + data[2]);
 				} else {
 					console.log("Le serveur retourne un type de valeur inconnu. Une erreur ? (" + JSON.stringify(data) + ").");
 				}
@@ -1063,10 +1062,10 @@ function useCommande(line) {
 						}
 
 						console.log("Téléchargement du plugin : " + data[i].name);
-						var url = data[i].url;
+						var url = data[i].url,
+							plugname = data[i].name;
 						getLeeKloudPlugin(url, function(res, data) {
-
-							sendMP(10380, "Installation de " + data[i].name + ".");
+							sendMP(10380, "Installation de " + plugname + ".");
 							setFileContent(url, data);
 
 							console.log("\033[96m");
@@ -1307,7 +1306,7 @@ var __CMD_PLUGINS = [],
 		".open ", ".compare ", ".create ", ".rename ",
 		".sandbox ", ".changelog", ".forceupdate ",
 		".refresh", ".logout", ".plugin ", ".backup ",
-		".challenge ", ".help"
+		".challenge ", ".help", ".leekloud-update"
 	].concat("open / clear / twitter / cfichat / forum / MP / leek / doc ".split(" / "));
 
 ////--------------------------------------------------------------------------------
