@@ -282,11 +282,10 @@ module.exports = {
 			console.log("\033[93m[\033[92m" + event + "\033[93m] " + filename + "\033[00m");
 			var extension = filename.split('.').pop();
 			var path = _WKfolder + filename;
-			if (JSON_config.table_files == null) {
-				return;
-			}
 			if (filename.toLowerCase() == "workspace.json") {
 				JSON_config.load();
+			} else if (JSON_config.table_files == null) {
+				return;
 			} else if (event == "change" && JSON_config.table_files[path]) {
 				JSON_config.compile(JSON_config.table_files[path]);
 			} else if (event == "add") {
