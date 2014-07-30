@@ -229,7 +229,7 @@ function getPlugins() {
 
 			console.log("Chargement du plugin : \033[95m" + name + "\033[00m\n");
 			try {
-				var plug = require("./" + _Plugfolder + file),
+				var plug = require(fs.realpathSync("./" + _Plugfolder + file)),
 					c = null;
 
 				plug.hash = sha256(getFileContent(_Plugfolder + file));
