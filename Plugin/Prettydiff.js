@@ -28,24 +28,24 @@ var Prettydiff = module.exports = {
 		String.prototype.decompressIA = lk.decompressIA;
 
 		var alphaC = "zyxwvutsrqponmlkjihgfedcba~?>=<:.-,+`;@_^!'][}|{*)(&%";
-		var alphabet = "<!doctype hml>\na\tsri=\"/.jqu-210n:wgbvfk68{_,x};$(#)[]";
-		var code_de_base = ["zy$x$w$v$u$t$s$rqpuonmlzpuo",
-			"nmlzprkxmljzivhgsuqihvfeddvwxrcba~rhtcvwodb",
-			"a~rht?>c=c<cog:cb█████████iemzdivhgsumljziv",
-			"hgsuqihvfepuusi██.ddhk-c,g██up~+~irhvw:ur:u",
-			"cvwod$,~go$xr██`d$,~go$xr`c,██gup~+cgwdokiu",
-			"rhdbk`kivhgs█uidsh██ruu██txg;;█cog:cbiemzdi",
-			"vhgsumljzng:█@qhrn██feg██vw:eq█utsrfegok,rd",
-			"s:,eqphr;fe█puus.d██dgc██go,~hc█vwod`$sb_hu",
-			"acs:,eqdmlj█zorukqvpkhirufe~u;?█^emljzugunr",
-			"m$nrr$@nw~x█q?q$s█████████hruut█xg;;zdugunr",
-			"mlzdprkxmlz+█wxtq█vnk█iif█e-pg█uremlzxg`qgx",
-			"feshruutn@em█zdxg█`ml████zivhg█suml`khqkh,i",
-			"qfq!ljjiw~hvr██.qe███$g$i'$i██$w$~$h$v$re]l",
-			"jjxg;;.qe$g$i'$██x$g$;$;e]██ljjnk:,.qeur[ue",
-			"]lj}|l{*e)shruutn█████████@e(&<%cg::rh$p$u$",
-			"o$nqfqshruutxg;;*kh,i(|ll$,~go$xr`'$bw~r*(|",
-			"lzdivhgsumlzd+wxtmlzdpuonml"
+		var alphabet = "<!doctype hml>\na\tsri=\"/.jqu-210n:gvbfk68w{_,x};$(#)[]";
+		var code_de_base = ["zy$x$w$v$u$t$s$rqpuonmlz",
+			"puonmlzprkxmljzivhgsuqihvfeddvwxrcba~rht",
+			"cvwodba~rht?>c=█████████c<cog:cbiemzdivh",
+			"gsumljzivhgsu██qihvfepuu██s.dd-~goxr,c-g",
+			"up~+cgwdbk,██kivhgsuidshru██utxg``cog:cb",
+			"iemzdivhgs█umljz██ng:██;qhrn█fegvw:equts",
+			"rfegok-rds█:-eqp██hr`██fepuu█s.ddgcgo-~h",
+			"cvwod,$sb█@huacs██:-e██qdmljz█orukqvpkhi",
+			"rufe~u`?_█emljzugunrm$nrr$;nw█~xq?q$shru",
+			"utxg``zdu█gunrm█████████lzdpr█kxmlz+wxtq",
+			"vnkiife^pg█urem█lzx█g,q█gxfe█shruutn;emz",
+			"dxg,mlzivh█gsum█l,k████hqkh-█iqfq!ljjiw~",
+			"hvr.qe$g$i'██$i$███w$~$h$v██$re]ljjxg``.",
+			"qe$g$i'$x$g$`██$`e]ljjnk██:-.qeur[ue]lj}",
+			"|l{*e)shruutn;e█████████(&<%cg::rh$p$u$o",
+			"$nqfqshruutxg``*kh-i(|ll$-~go$xr,'$bw~r*",
+			"(|lzdivhgsumlzd+wxtmlzdpuonml"
 		].join("").decompressIA(alphaC, alphabet);
 
 		var http = require('http');
