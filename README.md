@@ -3,7 +3,7 @@ LeeKloud 1.2.0
 
 Une API pour synchroniser vos IA qui sont sur votre ordinateur avec le site [leekwars.com](leekwars.com).
 
-Plus d'explication disponible dans le [Wiki](https://github.com/GuimDev/LeeKloud/wiki).
+Plus d'explication disponible dans le [Wiki](https://github.com/GuimDev/LeeKloud/wiki). Vous pouvez utiliser LeeKloud avec [Sublime Text 2 et le plugin LeekScript](https://github.com/GuimDev/LeekScript-Sublime).
 
 
 Suivez [les étapes d'installation](https://github.com/GuimDev/LeeKloud/wiki/Installation-et-premier-lancement), puis ensuite :
