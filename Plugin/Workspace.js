@@ -307,7 +307,12 @@ module.exports = {
 			}
 		});
 
-		JSON_config.load();
+		try {
+			JSON_config.load();
+		} catch (e) {
+			console.log("\033[91mErreur lors du chargement de la compilation.\033[00m");
+			console.log(err.stack);
+		}
 	}
 };
 
@@ -332,7 +337,7 @@ var JSON_config = {
 		num = (num) ? num : false;
 		for (var i = 0, content, myIA, actual; i < config.length; i++) {
 			myIA = new __IA(config[i].id);
-			if (num !== false && num.indexOf(i) === -1) {
+			if ((num !== false && num.indexOf(i) === -1) || !order_files[i]) {
 				continue;
 			}
 			console.log("\033[92m[\033[93m" + i + "\033[92m] Compilation de l'IA : \033[93m" + myIA.name + "\033[92m, \033[93m" + myIA.id + "\033[00m");
@@ -445,7 +450,7 @@ var JSON_config = {
 		readDir_Recursive(_WKfolder);
 		(DEBUG_MODE && console.log(JSON_config.table_files));
 		(DEBUG_MODE && console.log(JSON_config.order_files));
-		console.log("");
+		(DEBUG_MODE && console.log(""));
 
 		JSON_config.compile();
 	},
@@ -500,9 +505,8 @@ var JSON_config = {
 					(DEBUG_MODE && console.log("New rule :", rule));
 				}
 			}
-			console.log("\033[92m[\033[93m?\033[92m] Fichier JSON chargé.\033[00m");
+			console.log("\033[92m[\033[93m?\033[92m] Fichier JSON chargé.\033[00m\n");
 			JSON_config.config = config;
-			console.log("");
 			JSON_config.map();
 		}
 	},
