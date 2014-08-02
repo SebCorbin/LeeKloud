@@ -307,12 +307,7 @@ module.exports = {
 			}
 		});
 
-		try {
-			JSON_config.load();
-		} catch (e) {
-			console.log("\033[91mErreur lors du chargement de la compilation.\033[00m");
-			console.log(err.stack);
-		}
+		JSON_config.load();
 	}
 };
 
