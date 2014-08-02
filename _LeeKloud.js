@@ -490,6 +490,8 @@ function sendScript(id, forceUpdate) {
 				} else if (data == "bad token") {
 					console.log("Erreur : " + data);
 					return updateBadToken();
+				} else if (data == "Array") {
+					return console.log("\033[92mRetour 'Array'\033[00m, c'est un problème du serveur impossible de savoir si l'IA a été modifiée ou pas. ");
 				}
 
 				try {
