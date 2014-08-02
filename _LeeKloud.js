@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-var __version = "1.2.0b";
+var __version = "1.2.0c";
 var _Vname = "LeeKloud " + __version;
 
 process.title = _Vname;
@@ -490,6 +490,8 @@ function sendScript(id, forceUpdate) {
 				} else if (data == "bad token") {
 					console.log("Erreur : " + data);
 					return updateBadToken();
+				} else if (data == "Array") {
+					return console.log("\033[92mRetour 'Array'\033[00m, c'est un problème du serveur impossible de savoir si l'IA a été modifiée ou pas. ");
 				}
 
 				try {
@@ -986,7 +988,11 @@ function useCommande(line) {
 					compile: true
 				},
 				success: function(res, data) {
-					data = JSON.parse(data);
+					try {
+						data = JSON.parse(data);
+					} catch (e) {
+						console.log("Erreur...\n", data);
+					}
 					if (data && data.success) {
 						console.log("L'IA a été créée. Nommage en cours...\n");
 						$.post({
