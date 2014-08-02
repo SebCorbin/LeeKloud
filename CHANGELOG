@@ -1,3 +1,6 @@
+[1.2.0c]
+- Correction d'un bug avec la commande ".create", quand le nom est invalide.
+- L'erreur "Array" lors de l'envoie de l'IA est attrapée.
 [1.2.0b]
 - Ajout d'un wiki.
 - Corrige l'inversion entre niveau et coeur.
