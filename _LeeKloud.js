@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-var __version = "1.2.0b";
+var __version = "1.2.0c";
 var _Vname = "LeeKloud " + __version;
 
 process.title = _Vname;
@@ -986,7 +986,11 @@ function useCommande(line) {
 					compile: true
 				},
 				success: function(res, data) {
-					data = JSON.parse(data);
+					try {
+						data = JSON.parse(data);
+					} catch (e) {
+						console.log("Erreur...\n", data);
+					}
 					if (data && data.success) {
 						console.log("L'IA a été créée. Nommage en cours...\n");
 						$.post({
