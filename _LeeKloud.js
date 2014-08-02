@@ -827,7 +827,10 @@ function showListIA() {
 }
 
 function callbackFight(res, data) {
-	if (parseInt(data) != NaN) {
+	if (res.headers.location && res.headers.location.indexOf("/fight/") != -1) {
+		open("http://leekwars.com/" + res.headers.location);
+		console.log("Combat généré : " + res.headers.location);
+	} else if (parseInt(data) != NaN) {
 		open("http://leekwars.com/fight/" + data);
 		console.log("Combat généré : " + data);
 	} else {
@@ -957,60 +960,70 @@ function useCommande(line) {
 	// =====================================================
 	// ====================== CREATE =======================
 	else if (commande[0] == ".create") {
-		var alphaC = "zyxwvutsrqponmlkjihgfedcba~?>=<:.-,+`";
-		var alphabet = "/-\n codebasvilkunprmf(gtw)=\t[0];'hy!>";
-		var code_de_base = ["zzyyyyyyyyyyyyyy",
-			"yyyyyyyyyyyyyyyyyyxzzyyyyyyyw$vu",
-			"tswtswrqpsw█████████yyyyyyyyyyyx",
-			"zzyyyyyyy██yyyyyyywo██nqw$mss$lm",
-			"uktwyyy██yxxzzw$ujwihs██jtwmqwih",
-			"sgnshs█wqhgs██xnf██wedsc█$bsqiuj",
-			"eaw~~w█jkmma██x?p██sc$bs█qiujeds",
-			"c$bsq█iujpea██>=<██a:xxzz█w$ujwh",
-			"svkis█hswm.sjjsgnwmswimkp█wihuv-",
-			"sxoqh█wsjsg█████████,w~wd█sc$jsq",
-			"hspc$s█jsg,█ea:█xxz█zw$u█jwp.qii",
-			"huv-sw█tswm█.sj████jsgnw█pnwrspu",
-			"njxnfwe██dsc███$vsmm$c██u$kps$bs",
-			"qiujesjsg██,aw+~wdsc██$vsmmeaax?",
-			"guos$cubqht█████████esjsg,a:xxzz",
-			"w$ujwsppq,swtswmknwcnhshwtsppkpx",
-			"b-nmswekps$bsqiujesjsg,aw`~w=a:x"
-		].join("").decompressIA(alphaC, alphabet);
+		var setNewCode = function(id) {
+			var alphaC = "zyxwvutsrqponmlkjihgfedcba~?>=<:.-,+`";
+			var alphabet = "/-\n codebasvilkunprmf(gtw)=\t[0];'hy!>";
+			var code_de_base = ["zzyyyyyyyyyyyyyy",
+				"yyyyyyyyyyyyyyyyyyxzzyyyyyyyw$vu",
+				"tswtswrqpsw█████████yyyyyyyyyyyx",
+				"zzyyyyyyy██yyyyyyywo██nqw$mss$lm",
+				"uktwyyy██yxxzzw$ujwihs██jtwmqwih",
+				"sgnshs█wqhgs██xnf██wedsc█$bsqiuj",
+				"eaw~~w█jkmma██x?p██sc$bs█qiujeds",
+				"c$bsq█iujpea██>=<██a:xxzz█w$ujwh",
+				"svkis█hswm.sjjsgnwmswimkp█wihuv-",
+				"sxoqh█wsjsg█████████,w~wd█sc$jsq",
+				"hspc$s█jsg,█ea:█xxz█zw$u█jwp.qii",
+				"huv-sw█tswm█.sj████jsgnw█pnwrspu",
+				"njxnfwe██dsc███$vsmm$c██u$kps$bs",
+				"qiujesjsg██,aw+~wdsc██$vsmmeaax?",
+				"guos$cubqht█████████esjsg,a:xxzz",
+				"w$ujwsppq,swtswmknwcnhshwtsppkpx",
+				"b-nmswekps$bsqiujesjsg,aw`~w=a:x"
+			].join("").decompressIA(alphaC, alphabet);
+
+			$.post({
+				url: "/index.php?page=editor_update",
+				data: {
+					id: id,
+					compile: true,
+					token: __TOKEN,
+					code: code_de_base
+				},
+				success: function() {
+					getScripts();
+				}
+			});
+		};
 
 		if (commande[1]) {
 			$.post({
 				url: "/index.php?page=editor_update",
 				data: {
-					id: 0,
-					code: code_de_base,
-					token: __TOKEN,
-					compile: true
+					create: true,
+					token: __TOKEN
 				},
 				success: function(res, data) {
-					try {
-						data = JSON.parse(data);
-					} catch (e) {
-						console.log("Erreur...\n", data);
-					}
-					if (data && data.success) {
+					if (res.headers.location && res.headers.location.indexOf("/editor/") != -1) {
 						console.log("L'IA a été créée. Nommage en cours...\n");
+						var id = /\d+/.exec(res.headers.location);
 						$.post({
 							url: "/index.php?page=editor_update",
 							data: {
 								color: 0,
-								id: data.id,
+								id: id,
 								name: commande.slice(1).join(" "),
 								save: true,
 								token: __TOKEN
 							},
 							success: function(res, data) {
 								console.log("L'IA a été renommée, téléchargement de cette IA et actualisation des autres IAs.");
-								getScripts();
+
+								setNewCode(id);
 							}
 						});
 					} else {
-						console.log("Erreur...\n", data);
+						console.log("L'IA n'a pas été créée, problème avec le serveur.");
 					}
 				}
 			});
