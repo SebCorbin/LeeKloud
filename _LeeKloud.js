@@ -232,19 +232,6 @@ function getPlugins() {
 				var plug = require(fs.realpathSync("./" + _Plugfolder + file)),
 					c = null;
 
-				plug.hash = sha256(getFileContent(_Plugfolder + file));
-
-				if (c = plug.commandes) {
-					if (c.main) {
-						__CMD_PLUGINS[c.main] = name;
-					}
-					if (c.completion) {
-						__TAB_COMPLETIONS.push(c.completion);
-					}
-					if (c.help) {
-						__HELP_COMMANDS.push(c.help);
-					}
-				}
 				plug.parent = {
 					__IA: __IA,
 					__AI_CORES: __AI_CORES,
@@ -265,9 +252,23 @@ function getPlugins() {
 				};
 				plug.load();
 
+				plug.hash = sha256(getFileContent(_Plugfolder + file));
+
+				if (c = plug.commandes) {
+					if (c.main) {
+						__CMD_PLUGINS[c.main] = name;
+					}
+					if (c.completion) {
+						__TAB_COMPLETIONS.push(c.completion);
+					}
+					if (c.help) {
+						__HELP_COMMANDS.push(c.help);
+					}
+				}
+
 				_PLUGINS[name] = plug;
 			} catch (err) {
-				console.log("\033[91mErreur de chargement du plugin.\033[00m", err);
+				console.log("\033[91mErreur lors du chargement du plugin.\033[00m", err);
 				console.log(err.stack);
 			}
 		});
