@@ -488,10 +488,10 @@ function sendScript(id, forceUpdate) {
 				var myIA = new __IA(id);
 				if (data == "") { //Erreur serveur lors de la compilation
 					return console.log("Erreur serveur lors de la compilation.");
-				} else if (data == "bad token") {
+				} else if (data.replace("\n", "") == "bad token") {
 					console.log("Erreur : " + data);
 					return updateBadToken();
-				} else if (data == "Array") {
+				} else if (data.replace("\n", "") == "Array") {
 					return console.log("\033[92mRetour 'Array'\033[00m, c'est un problème du serveur impossible de savoir si l'IA a été modifiée ou pas. ");
 				}
 
