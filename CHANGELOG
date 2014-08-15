@@ -1,3 +1,7 @@
+[1.2.0d]
+- Ajout d'un nouveau plugin "Tournament" (Permet de s'inscrire aux tounois).
+- Correction de menus, orthographes, typos, ...
+- (Merci à PerfectSlayer pour cette mise à jour).
 [1.2.0c]
 - Correction d'un bug avec la commande ".create", quand le nom est invalide.
 - L'erreur "Array" lors de l'envoie de l'IA est attrapée.
