@@ -241,6 +241,7 @@ function getPlugins() {
 					__LEEK_IDS: __LEEK_IDS,
 					__FARMER_ID: __FARMER_ID,
 					__FARMER_NAME: __FARMER_NAME,
+					__TOKEN: __TOKEN,
 					_PLUGINS: _PLUGINS,
 					getFileContent: getFileContent,
 					setFileContent: setFileContent,
@@ -248,7 +249,8 @@ function getPlugins() {
 					printHelp: printHelp,
 					decompressIA: String.prototype.decompressIA,
 					sha256: sha256,
-					open: open
+					open: open,
+					request: $
 				};
 				plug.load();
 

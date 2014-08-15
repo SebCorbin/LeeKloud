@@ -7,4 +7,9 @@
 	"name": "Prettydiff",
 	"description": "Permet de comparer des fichiers (avec une interface visuelle).",
 	"url": "Plugin/Prettydiff.js"
+},
+{
+	"name": "Tournament",
+	"description": "Permet de s'inscrire aux tounois",
+	"url": "Plugin/Tournament.js"
 }]
