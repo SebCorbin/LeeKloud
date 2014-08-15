@@ -74,7 +74,7 @@ function main() {
 	console.log("------------------------------ " + _Vname + " " + right);
 	console.log("Programme proposé par @GuimDev, certaines parties du code sont sous licence.");
 	console.log("------ Retrouvez nous sur : " + cfichat_urlcolor + " (programmation). ------");
-	console.log("En cas de problème contactez moi sur le forum, ou MP HorsSujet (farmer=265).");
+	console.log("En cas de problème contactez-moi sur le forum, ou MP HorsSujet (farmer=265).");
 	console.log("----------------------------------------------------------------------------");
 	console.log("Emplacement : \033[96m" + process.cwd() + "\033[0m");
 
@@ -108,7 +108,7 @@ function main() {
 							setFileContent(".temp/cookie", JSON.stringify(dataCookie));
 
 							myCookie = dataCookieToString(dataCookie);
-							console.log("Connexion réussite.");
+							console.log("Connexion réussie.");
 
 							nextStep();
 						};
@@ -119,8 +119,8 @@ function main() {
 							console.log("Connexion échouée.\n");
 
 							console.log("Si vos informations sont correctes, vous pouvez forcer le processus.");
-							console.log("- Force la connexion avec \"force\".");
-							console.log("- Forcer la mise à jour de LeeKloud avec \"maj\".\n");
+							console.log("- Forcez la connexion avec \"force\".");
+							console.log("- Forcez la mise à jour de LeeKloud avec \"maj\".\n");
 							console.log("Appuyez sur entrée.");
 
 							rl.question("> ", function(answer) {
@@ -395,7 +395,7 @@ function __IA(id) {
 
 		for (var i = 0; i < files.length; i++) {
 			if ((new RegExp("\\[hs" + this.id + "\\]\.[A-z.]{2,9}$")).test(files[i])) {
-				console.log("Une IA a été renommé \033[36m" + files[i] + "\033[00m en \033[36m" + this.filename + "\033[00m.");
+				console.log("Une IA a été renommée \033[36m" + files[i] + "\033[00m en \033[36m" + this.filename + "\033[00m.");
 				fs.renameSync(_IAfolder + files[i], this.filepath);
 				return true;
 			}
@@ -471,7 +471,7 @@ function sendScript(id, forceUpdate) {
 			} else {
 				_PLUGINS["Prettydiff"].compare(myIA.filepath, [data]);
 			}
-			console.log("La version du serveur est différente, elle a été changé depuis le dernier téléchargement. Forcez l'envois avec la commande \"\033[95m.forceupdate " + myIA.id + "\033[00m\".");
+			console.log("La version du serveur est différente, elle a été changée depuis le dernier téléchargement. Forcez l'envoi avec la commande \"\033[95m.forceupdate " + myIA.id + "\033[00m\".");
 			return rl.history.unshift(".forceupdate " + myIA.id);
 		}
 
@@ -492,7 +492,7 @@ function sendScript(id, forceUpdate) {
 					console.log("Erreur : " + data);
 					return updateBadToken();
 				} else if (data.replace("\n", "") == "Array") {
-					return console.log("\033[92mRetour 'Array'\033[00m, c'est un problème du serveur impossible de savoir si l'IA a été modifiée ou pas. ");
+					return console.log("\033[92mRetour 'Array'\033[00m, c'est un problème du serveur impossible de savoir si l'IA a été modifiée ou pas.");
 				}
 
 				try {
@@ -517,7 +517,7 @@ function sendScript(id, forceUpdate) {
 				 * - core : nombre de core de la fonction ayant besoin du plus grand nombre de coeur dans l'ia
 				 */
 				data = data[0];
-				console.log("L'envoie de \033[36m" + myIA.filename + "\033[00m " + ((data[0] == 2) ? "réussi" : "échoué") + ".");
+				console.log("L'envoi de \033[36m" + myIA.filename + "\033[00m " + ((data[0] == 2) ? "réussi" : "échoué") + ".");
 				if (data[0] == 0) { // Erreur de compilation "classique"
 					// [0, ia_context, ia, line, pos, informations]
 					console.log(" ");
@@ -541,12 +541,12 @@ function sendScript(id, forceUpdate) {
 					console.log("" + data[5] + " (ligne : \033[96m" + data[3] + "\033[00m, caract : \033[96m" + data[4] + "\033[00m).");
 				} else if (data[0] == 1) {
 					// [1, ia_context, informations]
-					console.log("Erreur sans plus d'informations : " + data[2]);
+					console.log("Erreur sans plus d'information : " + data[2]);
 				} else if (data[0] == 2) {
 					// [2, ia_context, core, level]
 					console.log("Niveau : " + data[3] + " Coeur : " + data[2]);
 				} else {
-					console.log("Le serveur retourne un type de valeur inconnu. Une erreur ? (" + JSON.stringify(data) + ").");
+					console.log("Le serveur retourne un type de valeur inconnue. Une erreur ? (" + JSON.stringify(data) + ").");
 				}
 				console.log(" ");
 			}
@@ -610,7 +610,7 @@ function successloadScript(res, data, context) {
 
 	var thash = __FILEHASH[myIA.id];
 	if (!thash) {
-		type = "\033[96mCreation";
+		type = "\033[96mCréation";
 		action = 1;
 	} else if (thash.filehash == serverhash) { //thash.lasthash == thash.filehash
 		__FILEHASH[myIA.id].lasthash = serverhash; /* Si le fichier hash a été supprimé */
@@ -629,7 +629,7 @@ function successloadScript(res, data, context) {
 		type = "\033[93mS & C changé";
 		action = 3;
 	} else {
-		type = "\033[91mSi tu me vois dis le sur le forum (err:2-" + thash.lasthash + "-" + thash.filehash + "-" + serverhash + ").";
+		type = "\033[91mSi tu me vois, dit-le sur le forum (err:2-" + thash.lasthash + "-" + thash.filehash + "-" + serverhash + ").";
 	}
 
 	console.log(" ");
@@ -640,7 +640,7 @@ function successloadScript(res, data, context) {
 		}
 		myIA.syncWithServer(data);
 	} else if (action === 2 || action === 3) {
-		console.log("- Envoie de \033[36m" + myIA.filename + "\033[00m (fichier local plus récent).");
+		console.log("- Envoi de \033[36m" + myIA.filename + "\033[00m (fichier local plus récent).");
 		sendScript(myIA.id, true);
 		if (action === 3) {
 			backup_change(action, myIA.id, data);
@@ -648,7 +648,7 @@ function successloadScript(res, data, context) {
 	} else if (action === 0) {
 		console.log("- \033[36m" + myIA.filename + "\033[00m.");
 	} else {
-		console.log("\033[91mSi tu me vois dis le sur le forum (err:3).\033[00m");
+		console.log("\033[91mSi tu me vois, dit-le sur le forum (err:3).\033[00m");
 	}
 
 	console.log("--- ETAT : \033[36m" + type + "\033[00m\n");
@@ -689,7 +689,7 @@ function successloadScript(res, data, context) {
 			});
 			__FILEHASH = newFileHash;
 			setFileContent(".temp/hash", JSON.stringify(__FILEHASH));
-			console.log("La corruption du fichier \".temp/hash\" a été fixée.");
+			console.log("La corruption du fichier \".temp/hash\" a été corrigée.");
 		}
 		try {
 			var req = http.request({
@@ -806,7 +806,7 @@ function backup_change(action, id, data) {
 	} else if (action == 4) {
 		setFileContent(".temp/backup/" + myIA.filename + ".back.lk", myIA.getIAData());
 	} else {
-		return console.log("\033[91mSi tu me vois dis le sur le forum (err:4).\033[00m");
+		return console.log("\033[91mSi tu me vois, dit-le sur le forum (err:4).\033[00m");
 	}
 
 	if (!_PLUGINS["Prettydiff"]) {
@@ -814,14 +814,14 @@ function backup_change(action, id, data) {
 	} else {
 		_PLUGINS["Prettydiff"].compare(myIA.filepath, ".temp/backup/" + myIA.filename + ".back.lk");
 	}
-	console.log("- La " + applique + "\033[00m a été appliqué, vous pouvez choisir la " + backup + "\033[00m avec la commande \"\033[95m.backup " + myIA.id + "\033[00m\".");
+	console.log("- La " + applique + "\033[00m a été appliquée, vous pouvez choisir la " + backup + "\033[00m avec la commande \"\033[95m.backup " + myIA.id + "\033[00m\".");
 
 	rl.history.unshift(".backup " + myIA.id + " restore");
 	__FILEBACK[myIA.index] = myIA.id;
 }
 
 function showListIA() {
-	console.log("Liste des IA :");
+	console.log("Liste des IAs :");
 	__AI_IDS.forEach(function(id, index) {
 		console.log("- \033[36m" + id + "\033[00m : \033[36m" + __AI_NAMES[index] + "\033[00m.");
 	});
@@ -1089,7 +1089,7 @@ function useCommande(line) {
 							setFileContent(url, data);
 
 							console.log("\033[96m");
-							splashMessage("Le plugin a été installée !");
+							splashMessage("Le plugin a été installé !");
 							console.log("\033[00m");
 							shutdown();
 						});
@@ -1097,7 +1097,7 @@ function useCommande(line) {
 					}
 				}
 
-				console.log("Aucun plugin porte se nom.\n");
+				console.log("Aucun plugin porte ce nom.\n");
 			});
 		} else if (commande[1] == "list") {
 			console.log("Obtention de la liste des plugins.");
@@ -1192,7 +1192,7 @@ function useCommande(line) {
 				token: __TOKEN
 			},
 			success: function(res, data) {
-				console.log("Requête de déconnexion reçu par le serveur.");
+				console.log("Requête de déconnexion reçue par le serveur.");
 			}
 		});
 
@@ -1210,7 +1210,7 @@ function useCommande(line) {
 		console.log("Astuces :");
 		console.log("- Si on vous demande de taper \"\033[95m.backup \033[00m[\033[95mid\033[00m]\" ou \"\033[95m.forceupdate \033[00m[\033[95mid\033[00m]\", essayez la flèche du haut.");
 		console.log("- Essayez la touche tabulation lors de la saisie d'une commande.");
-		console.log("- La commande \033[95m.logout\033[00m permet de vous déconnectez (elle supprime les cookies).");
+		console.log("- La commande \033[95m.logout\033[00m permet de vous déconnecter (elle supprime les cookies).");
 	}
 	// =====================================================
 	// ===================== CFICHAT =======================
@@ -1310,14 +1310,14 @@ function completerMore(line, hits) {
 var __CMD_PLUGINS = [],
 	__HELP_COMMANDS = [
 		[".open    [id]            ", "Ouvrir l'IA"],
-		[".compare [id1] [id2]     ", "Comparer deux IA"],
+		[".compare [id1] [id2]     ", "Comparer deux IAs"],
 		[".create  [new_name]      ", "Créer une IA"],
 		[".rename  [id] [new_name] ", "Changer le nom de l'IA"],
 		[".sandbox [id] [num_leek] ", "Lance un combat de test"],
 		[".changelog    [version]  ", "Affiche les entrées du CHANGELOG"],
-		[".forceupdate  [id]       ", "Forcer l'envoie de l'IA"],
+		[".forceupdate  [id]       ", "Forcer l'envoi de l'IA"],
 		[".refresh                 ", "Rafraîchir les scripts depuis le serveur"],
-		[".logout                  ", "Déconnecte le poireau (supprime les cookies)"],
+		[".logout                  ", "Déconnecte le farmer (supprime les cookies)"],
 		[".plugin    {install / list / update / remove} ", "Gestion des plugins"],
 		[".backup    [id] {restore / open / compare}    ", "Gestion des backups"],
 		[".challenge [num_leek] [leekid] ", "Lance un challenge [leekid] est l'id du poireau à attaquer (dans l'url)"]
