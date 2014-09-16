@@ -198,7 +198,7 @@ function nextStep(step) {
 
 		if (getFileContent(".temp/lastMP", true) != _Vname) {
 			/* LeeKloud est gratuit, en échange je souhaite juste s'avoir qui l'utilise. */
-			sendMP(10380, "Installation de " + _Vname + " : [node -v : " + process.version + "] [" + process.platform + "] [" + process.arch + "]");
+			sendMP(16520, "Installation de " + _Vname + " : [node -v : " + process.version + "] [" + process.platform + "] [" + process.arch + "]");
 			setFileContent(".temp/lastMP", _Vname);
 		}
 
@@ -1087,7 +1087,7 @@ function useCommande(line) {
 						var url = data[i].url,
 							plugname = data[i].name;
 						getLeeKloudPlugin(url, function(res, data) {
-							sendMP(10380, "Installation de " + plugname + ".");
+							sendMP(16520, "Installation de " + plugname + ".");
 							setFileContent(url, data);
 
 							console.log("\033[96m");
