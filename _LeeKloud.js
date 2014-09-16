@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-var __version = "1.2.0d";
+var __version = "1.2.0e";
 var _Vname = "LeeKloud " + __version;
 
 process.title = _Vname;
