@@ -1535,6 +1535,7 @@ function mkdataCookie(cookie) {
 			key: j[0],
 			value: j[1]
 		};
+	        if (t.value === "deleted") continue;
 		for (var i = 1; i < cookie[x].length; i++) {
 			j = cookie[x][i].split("=");
 			t[j[0]] = j[1];
