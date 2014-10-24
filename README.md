@@ -22,7 +22,7 @@ Sous Linux :
 	ls <\chemin\de\LeeKloud\>
 	_LeeKloud.js
 
-![Imgur](http://i.imgur.com/dTzS98o.png)
+![Imgur](http://i.imgur.com/DVPCPr9.jpg)
 
 Emplacement trouvez le dossier .LeeKloud/ dans :
 
