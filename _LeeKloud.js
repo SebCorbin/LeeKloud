@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-var __version = "1.2.0e";
+var __version = "1.2.0f";
 var _Vname = "LeeKloud " + __version;
 
 process.title = _Vname;
@@ -69,12 +69,12 @@ var _LKfolder = "";
 })(process.env.HOME || process.env.APPDATA || process.env.USERPROFILE || process.env.HOMEPATH);
 
 function main() {
-	var cfichat_urlcolor = "\033[95mhttp://chat.cfillion.tk/\033[00m";
+	var 12zchat_url = "\003[95mhttp://chat.12z.fr/\033[00m"
 	var right = Array(45 - _Vname.length).join("-");
 	console.log("------------------------------ " + _Vname + " " + right);
 	console.log("Programme proposé par @GuimDev, certaines parties du code sont sous licence.");
-	console.log("------ Retrouvez nous sur : " + cfichat_urlcolor + " (programmation). ------");
-	console.log("En cas de problème contactez-moi sur le forum, ou MP HorsSujet (farmer=265).");
+	console.log("------ Retrouvez nous sur : " + 12zchat_url + " (node/programmation). ------");
+	console.log("En cas de problème contactez-moi sur le forum, ou MP HorsSujet (farmer=???).");
 	console.log("----------------------------------------------------------------------------");
 	console.log("Emplacement : \033[96m" + process.cwd() + "\033[0m");
 
@@ -1207,7 +1207,7 @@ function useCommande(line) {
 		console.log("Aide :");
 		printHelp(__HELP_COMMANDS);
 		console.log("(?) [\033[95mnum_leek\033[00m] est le numéro de votre poireau (entre 0 et " + (__LEEK_IDS.length - 1) + ")");
-		console.log("Autres : { \033[95mopen / twitter / cfichat / forum / leek / doc / .leekloud-update / .logout\033[00m }".replace(/ \/ /g, "\033[00m / \033[95m"));
+		console.log("Autres : { \033[95mopen / twitter / chat / forum / leek / doc / .leekloud-update / .logout\033[00m }".replace(/ \/ /g, "\033[00m / \033[95m"));
 		console.log(" ");
 		console.log("Astuces :");
 		console.log("- Si on vous demande de taper \"\033[95m.backup \033[00m[\033[95mid\033[00m]\" ou \"\033[95m.forceupdate \033[00m[\033[95mid\033[00m]\", essayez la flèche du haut.");
@@ -1215,10 +1215,10 @@ function useCommande(line) {
 		console.log("- La commande \033[95m.logout\033[00m permet de vous déconnecter (elle supprime les cookies).");
 	}
 	// =====================================================
-	// ===================== CFICHAT =======================
-	else if (commande[0] == "cfichat") {
-		console.log("cfiChat : canal de discussion (HomeMade) - Programmation");
-		open("http://chat.cfillion.tk/");
+	// ===================== chat ==========================
+	else if (commande[0] == "chat") {
+		console.log("Le chat 12z : canal de discussion (HomeMade) - Programmation");
+		open("http://chat.12z.fr/");
 	}
 	// =====================================================
 	// ======= EN AVANT LES HISTOIRES ! ====================
@@ -1329,7 +1329,7 @@ var __CMD_PLUGINS = [],
 		".sandbox ", ".changelog", ".forceupdate ",
 		".refresh", ".logout", ".plugin ", ".backup ",
 		".challenge ", ".help", ".leekloud-update"
-	].concat("open / clear / twitter / cfichat / forum / MP / leek / doc ".split(" / "));
+	].concat("open / clear / twitter / chat / forum / MP / leek / doc ".split(" / "));
 
 ////--------------------------------------------------------------------------------
 ////--------------------------------------------------------------------------------
