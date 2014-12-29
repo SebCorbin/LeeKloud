@@ -49,7 +49,7 @@ var _IAfolder = "../Alkaaran/",
 var LeeKloud = null,
 	myCookie = "";
 
-process.on("uncaughtException", function(err, b) {
+process.on("uncaughtException", function (err) {
 	console.log("\033[91mErreur vraiment fatale !\033[00m");
 	console.log("\n" + err.stack + "\n");
 	writeRapportlog(err);
@@ -58,7 +58,7 @@ process.on("uncaughtException", function(err, b) {
 });
 
 var _LKfolder = "";
-(function(folder) {
+(function (folder) {
 	_LKfolder = folder += "/.LeeKloud/";
 	if (!fs.existsSync(folder)) {
 		fs.mkdirSync(folder);
@@ -76,7 +76,7 @@ function main() {
 	console.log("----------------------------------------------------------------------------");
 	console.log("Emplacement : \033[96m" + process.cwd() + "\033[0m");
 
-	[_IAfolder, _Plugfolder, ".temp/", ".temp/backup/"].forEach(function(dir) {
+	[_IAfolder, _Plugfolder, ".temp/", ".temp/backup/"].forEach(function (dir) {
 		if (!fs.existsSync(dir)) {
 			fs.mkdirSync(dir);
 		}
@@ -90,9 +90,9 @@ function main() {
 
 	if (!fs.existsSync(".temp/cookie")) {
 		console.log("Connexion nécessaire.");
-		rl.question("Pseudo : ", function(pseudo) {
+		rl.question("Pseudo : ", function (pseudo) {
 			rl.history = rl.history.slice(1);
-			hidden("Password : ", function(password) {
+			hidden("Password : ", function (password) {
 				$.post({
 					url: "/index.php?page=login_form",
 					data: {
@@ -100,8 +100,8 @@ function main() {
 						login: pseudo,
 						pass: password
 					},
-					success: function(res, data) {
-						var funcConnexion = function() {
+					success: function (res, data) {
+						var funcConnexion = function () {
 							var dataCookie = mkdataCookie(res.headers["set-cookie"]);
 							setFileContent(".temp/cookie", JSON.stringify(dataCookie));
 
@@ -121,7 +121,7 @@ function main() {
 							console.log("- Forcez la mise à jour de LeeKloud avec \"maj\".\n");
 							console.log("Appuyez sur entrée.");
 
-							rl.question("> ", function(answer) {
+							rl.question("> ", function (answer) {
 								if (answer.toLowerCase() == "force") {
 									funcConnexion();
 								} else if (answer.toLowerCase() == "maj") {
@@ -153,7 +153,7 @@ function launcher(clear, message) {
 	}
 
 	LeeKloud = domain.create();
-	LeeKloud.on("error", function(err) {
+	LeeKloud.on("error", function (err) {
 		console.log("\n\033[91mErreur arrêt de toutes les tâches en cours !\033[00m");
 		console.log("\n" + err.stack + "\n\n");
 		writeRapportlog(err);
@@ -178,12 +178,12 @@ function nextStep(step) {
 			} else if (match[1]) {
 				console.log("Demande de test de l'IA : \033[36m" + match[0] + "\033[00m");
 				var phrase = "entre 0 et " + (__LEEK_IDS.length - 1);
-				rl.question("Numéro du Leek (" + phrase + ") pour tester l'IA : ", function(id) {
+				rl.question("Numéro du Leek (" + phrase + ") pour tester l'IA : ", function (id) {
 					if (!__LEEK_IDS[id]) {
 						console.log("Le numéro du Leek doit-être " + phrase + ".");
 						return nextStep();
 					}
-					sandbox(parseInt(match[1]), __LEEK_IDS[id]).done(function() {
+					sandbox(parseInt(match[1]), __LEEK_IDS[id]).done(function () {
 						shutdown();
 					});
 				});
@@ -210,7 +210,7 @@ function getPlugins() {
 
 	var files = fs.readdirSync(_Plugfolder);
 
-	files = files.filter(function(file) {
+	files = files.filter(function (file) {
 		var stat = fs.statSync(_Plugfolder + file);
 		return file.substr(-3) === ".js" && stat.isFile();
 	});
@@ -222,7 +222,7 @@ function getPlugins() {
 		useCommande(".plugin install WorkSpace y");
 		useCommande(".plugin install Prettydiff y");
 	} else {
-		files.forEach(function(file) {
+		files.forEach(function (file) {
 			var name = file.substr(0, file.length - 3);
 
 			console.log("Chargement du plugin : \033[95m" + name + "\033[00m\n");
@@ -252,7 +252,7 @@ function getPlugins() {
 
 				plug.hash = sha256(getFileContent(_Plugfolder + file));
 
-        var c;
+				var c;
 				if (c = plug.commandes) {
 					if (c.main) {
 						__CMD_PLUGINS[c.main] = name;
@@ -278,7 +278,7 @@ function getPlugins() {
 function shutdown(bool) {
 	process.stdin.pause();
 	console.log("\nArrêt dans 4 secondes.");
-	return setTimeout(function() {
+	return setTimeout(function () {
 		LeeKloudStop(bool);
 	}, 4000);
 }
@@ -291,7 +291,7 @@ function sendMP(conv, msg) {
 			message: msg,
 			token: __TOKEN
 		},
-		success: function(res, data, context) {
+		success: function (res, data, context) {
 			//console.log(data);
 		}
 	});
@@ -304,7 +304,7 @@ function getScripts() {
 	console.log("Obtention de la liste des scripts.\n");
 	$.get({
 		url: "/editor",
-		success: function(res, data) {
+		success: function (res, data) {
 			if (data == "") {
 				console.log("\033[91mVous n'êtes pas connecté, connectez-vous.\033[00m");
 				fs.unlinkSync(".temp/cookie");
@@ -332,13 +332,13 @@ function getScripts() {
 				return shutdown(true);
 			}
 
-			__LEEK_IDS.forEach(function(value, index) {
+			__LEEK_IDS.forEach(function (value, index) {
 				__LEEK_IDS[index] = parseInt(value.match(/id='([0-9]+)'/)[1]);
 			});
 			setFileContent(".temp/leeks", JSON.stringify(__LEEK_IDS));
 
 			console.log(">> Téléchargements...");
-			__AI_IDS.forEach(function(value, index) {
+			__AI_IDS.forEach(function (value, index) {
 				loadScript(value, index, successloadScript);
 			});
 		}
@@ -375,19 +375,19 @@ function __IA(id) {
 
 	this.filepath = _IAfolder + this.filename;
 
-	this.getIAData = function() {
+	this.getIAData = function () {
 		return getFileContent(this.filepath);
 	};
 
-	this.setIAData = function(data) {
+	this.setIAData = function (data) {
 		return setFileContent(this.filepath, data);
 	};
 
-	this.getHash = function() {
+	this.getHash = function () {
 		return sha256(this.getIAData());
 	};
 
-	this.scandir = function() {
+	this.scandir = function () {
 		var files = fs.readdirSync(_IAfolder);
 
 		for (var i = 0; i < files.length; i++) {
@@ -401,7 +401,7 @@ function __IA(id) {
 		return false;
 	};
 
-	this.syncWithServer = function(data) {
+	this.syncWithServer = function (data) {
 		this.setIAData(data);
 
 		var hash = this.getHash();
@@ -415,16 +415,16 @@ function __IA(id) {
 	};
 }
 
-Number.prototype.round = function(a) {
+Number.prototype.round = function (a) {
 	a = (a) ? parseInt("1" + new Array(a + 1).join("0")) : 1;
 	return Math.round(this * a) / a;
 };
 
-Number.prototype.pad = function() {
+Number.prototype.pad = function () {
 	return (this < 10) ? ("0" + this) : this;
 }
 
-String.prototype.decompressIA = function(alphaC, alphabet) {
+String.prototype.decompressIA = function (alphaC, alphabet) {
 	var result = [];
 	for (var i = 0, maj = false, letter, num; i < this.length; i++) {
 		num = alphaC.indexOf(this.charAt(i));
@@ -443,13 +443,13 @@ function updateBadToken() {
 	return getScripts();
 }
 
-setInterval(function() {
+setInterval(function () {
 	updateBadToken();
 }, 15 * 60 * 1000);
 
 function sendScript(id, forceUpdate) {
 	forceUpdate = (forceUpdate) ? true : false;
-	loadScript(id, __AI_IDS.indexOf(id), function(res, data) {
+	loadScript(id, __AI_IDS.indexOf(id), function (res, data) {
 		var myIA = new __IA(id),
 			serverhash = sha256(data),
 			code = myIA.getIAData(),
@@ -481,7 +481,7 @@ function sendScript(id, forceUpdate) {
 				token: __TOKEN,
 				code: code
 			},
-			success: function(res, data) {
+			success: function (res, data) {
 				myIA = new __IA(id);
 				if (data == "") { //Erreur serveur lors de la compilation
 					return console.log("Erreur serveur lors de la compilation.");
@@ -553,8 +553,8 @@ function sendScript(id, forceUpdate) {
 }
 
 function alignLine(num, text, longer, maxsize) {
-  var columns = process.stdout.columns || 50;
-  var maxlength = columns - 1;
+	var columns = process.stdout.columns || 50;
+	var maxlength = columns - 1;
 	num = num + new Array(longer - (num + "").length).join(" ");
 	maxlength -= num.length + 3;
 	console.log("\033[36m" + num + " |\033[00m " + text.slice(0, (maxsize < maxlength) ? maxlength : maxsize));
@@ -575,7 +575,7 @@ function loadScript(value, index, success) {
 		context: {
 			id: myIA.id
 		},
-		success: function(res, data, context) {
+		success: function (res, data, context) {
 			// Reprise de la modif de Pilow : "Là y'a un souci, le code présente une ligne de plus :/ On la dégage"
 			data = data.slice(0, -1);
 			success(res, data, context);
@@ -611,7 +611,8 @@ function successloadScript(res, data, context) {
 		type = "\033[96mCréation";
 		action = 1;
 	} else if (thash.filehash == serverhash) { //thash.lasthash == thash.filehash
-		__FILEHASH[myIA.id].lasthash = serverhash; /* Si le fichier hash a été supprimé */
+		__FILEHASH[myIA.id].lasthash = serverhash;
+		/* Si le fichier hash a été supprimé */
 		type = "\033[95mIdentique";
 		action = 0;
 	} else if (thash.lasthash == 12) {
@@ -657,7 +658,7 @@ function successloadScript(res, data, context) {
 	__FILEMTIME[myIA.id] = new Date(stat.mtime).getTime();
 
 	fs.unwatchFile(myIA.filepath);
-	fs.watch(myIA.filepath, function(event, filename) {
+	fs.watch(myIA.filepath, function (event, filename) {
 		filename = (filename) ? _IAfolder + filename : myIA.filepath;
 		if (filename && event == "change") {
 			var stat = fs.statSync(myIA.filepath);
@@ -679,7 +680,7 @@ function successloadScript(res, data, context) {
 
 		if (__FILEHASH instanceof Array) {
 			var newFileHash = {};
-			__AI_IDS.forEach(function(value) {
+			__AI_IDS.forEach(function (value) {
 				newFileHash[value] = {
 					lasthash: __FILEHASH[value].lasthash,
 					filehash: __FILEHASH[value].filehash
@@ -699,10 +700,13 @@ function successloadScript(res, data, context) {
 					"Referer": "http://leekwars.com/",
 					"User-Agent": "Mozilla/5.0 (" + process.platform + "; " + process.arch + ") AppleWebKit/535.1 (KHTML, like Gecko) NodeJS/14.0.835.186 Safari/535.1"
 				}
-			}, function(res) {
-				res.on("end", function() {});
-			}).on("error", function() {}).end();
-		} catch (err) {}
+			}, function (res) {
+				res.on("end", function () {
+				});
+			}).on("error", function () {
+			}).end();
+		} catch (err) {
+		}
 
 		getPlugins();
 
@@ -726,7 +730,7 @@ function verifyVersion(abc) {
 	}
 
 	if (check) {
-		getLeeKloud(function(res, data) {
+		getLeeKloud(function (res, data) {
 			if (abc) {
 				__mustBeUpdate = false;
 				setFileContent(__filename, data);
@@ -765,7 +769,7 @@ function splashMessage(msg, size) {
 
 function showChangelog(version, actual) {
 	version = (version) ? version : __version;
-	getChangeLogLeeKloud(function(res, data) {
+	getChangeLogLeeKloud(function (res, data) {
 		var i = 2,
 			t = data.split(/(^|\n)[(.+)]\n/),
 			log = "",
@@ -820,7 +824,7 @@ function backup_change(action, id, data) {
 
 function showListIA() {
 	console.log("Liste des IAs :");
-	__AI_IDS.forEach(function(id, index) {
+	__AI_IDS.forEach(function (id, index) {
 		console.log("- \033[36m" + id + "\033[00m : \033[36m" + __AI_NAMES[index] + "\033[00m.");
 	});
 }
@@ -870,22 +874,22 @@ function sendFight(data) {
 }
 
 function useCommande(line) {
-  var commande = line.split(" ")
-    , index
-    , id
-    , myIA
-    ;
+	var commande = line.split(" ")
+		, index
+		, id
+		, myIA
+		;
 
 	// =====================================================
 	// ================= BACKUP ============================
 	if (commande[0] == ".backup") {
 		id = parseInt(commande[1]);
-    index = __AI_IDS.indexOf(id);
-    var filenameback, backup;
+		index = __AI_IDS.indexOf(id);
+		var filenameback, backup;
 
 		if (index != -1 && __FILEBACK[index] == id) {
 			myIA = new __IA(id);
-      filenameback = getFilePathBackup(myIA.filename);
+			filenameback = getFilePathBackup(myIA.filename);
 
 			if (commande[2] == "restore") {
 				console.log("Le backup de \033[36m" + myIA.filename + "\033[00m a été restauré. Vous pouvez réutiliser la précédente commande si vous changez d'avis.");
@@ -911,7 +915,7 @@ function useCommande(line) {
 	// ====================== FORCEUPDATE =======================
 	else if (commande[0] == ".forceupdate") {
 		id = parseInt(commande[1]);
-    index = __AI_IDS.indexOf(id);
+		index = __AI_IDS.indexOf(id);
 
 		if (index != -1) {
 			sendScript(id, true);
@@ -930,7 +934,7 @@ function useCommande(line) {
 	// ====================== OPEN =========================
 	else if (commande[0] == ".open") {
 		id = parseInt(commande[1]);
-    index = __AI_IDS.indexOf(id);
+		index = __AI_IDS.indexOf(id);
 
 		if (index != -1) {
 			myIA = new __IA(id);
@@ -945,7 +949,7 @@ function useCommande(line) {
 	// ====================== COMPARE ======================
 	else if (commande[0] == ".compare") {
 		var ids = [parseInt(commande[1]), parseInt(commande[2])];
-    index = [__AI_IDS.indexOf(ids[0]), __AI_IDS.indexOf(ids[1])];
+		index = [__AI_IDS.indexOf(ids[0]), __AI_IDS.indexOf(ids[1])];
 
 		if (!_PLUGINS["Prettydiff"]) {
 			console.log("Le plugin Prettydiff doit-être installé pour comparer un fichier.");
@@ -963,7 +967,7 @@ function useCommande(line) {
 	// =====================================================
 	// ====================== CREATE =======================
 	else if (commande[0] == ".create") {
-		var setNewCode = function(id) {
+		var setNewCode = function (id) {
 			var alphaC = "zyxwvutsrqponmlkjihgfedcba~?>=<:.-,+`";
 			var alphabet = "/-\n codebasvilkunprmf(gtw)=\t[0];'hy!>";
 			var code_de_base = ["zzyyyyyyyyyyyyyy",
@@ -993,7 +997,7 @@ function useCommande(line) {
 					token: __TOKEN,
 					code: code_de_base
 				},
-				success: function() {
+				success: function () {
 					getScripts();
 				}
 			});
@@ -1006,7 +1010,7 @@ function useCommande(line) {
 					create: true,
 					token: __TOKEN
 				},
-				success: function(res) {
+				success: function (res) {
 					if (res.headers.location && res.headers.location.indexOf("/editor/") != -1) {
 						console.log("L'IA a été créée. Nommage en cours...\n");
 						var id = /\d+/.exec(res.headers.location);
@@ -1019,7 +1023,7 @@ function useCommande(line) {
 								save: true,
 								token: __TOKEN
 							},
-							success: function() {
+							success: function () {
 								console.log("L'IA a été renommée, téléchargement de cette IA et actualisation des autres IAs.");
 
 								setNewCode(id);
@@ -1038,7 +1042,7 @@ function useCommande(line) {
 	// ====================== RENAME =======================
 	else if (commande[0] == ".rename") {
 		id = parseInt(commande[1]);
-    index = __AI_IDS.indexOf(id);
+		index = __AI_IDS.indexOf(id);
 
 		if (index != -1) {
 			if (commande[2]) {
@@ -1051,7 +1055,7 @@ function useCommande(line) {
 						save: true,
 						token: __TOKEN
 					},
-					success: function(res, data) {
+					success: function (res, data) {
 						console.log("Le changement " + ((JSON.parse(data)) ? "a" : "\033[91mn'\033[00ma \033[91mpas\033[00m") + " été accepté par le serveur.");
 					}
 				});
@@ -1073,7 +1077,7 @@ function useCommande(line) {
 		}
 		if (commande[1] == "install" && commande[2]) {
 			console.log("Obtention de la liste des plugins.");
-			getRepositoryJSON(function(res, data) {
+			getRepositoryJSON(function (res, data) {
 				data = JSON.parse(data);
 
 				for (var i = 0; i < data.length; i++) {
@@ -1086,7 +1090,7 @@ function useCommande(line) {
 						console.log("Téléchargement du plugin : " + data[i].name);
 						var url = data[i].url,
 							plugname = data[i].name;
-						getLeeKloudPlugin(url, function(res, data) {
+						getLeeKloudPlugin(url, function (res, data) {
 							sendMP(16520, "Installation de " + plugname + ".");
 							setFileContent(url, data);
 
@@ -1103,7 +1107,7 @@ function useCommande(line) {
 			});
 		} else if (commande[1] == "list") {
 			console.log("Obtention de la liste des plugins.");
-			getRepositoryJSON(function(res, data) {
+			getRepositoryJSON(function (res, data) {
 				data = JSON.parse(data);
 				var s = (data.length <= 1) ? "" : "s";
 				console.log("\033[96m");
@@ -1131,7 +1135,7 @@ function useCommande(line) {
 	// ====================== CHALLENGE ====================
 	else if (commande[0] == ".challenge") {
 		id = parseInt(commande[1]);
-		var	enemy = parseInt(commande[2]);
+		var enemy = parseInt(commande[2]);
 
 		if (__LEEK_IDS[id]) {
 			sendFight({
@@ -1146,8 +1150,8 @@ function useCommande(line) {
 	// ====================== SANDBOX ======================
 	else if (commande[0] == ".sandbox") {
 		var ia_id = parseInt(commande[1]);
-    index = __AI_IDS.indexOf(ia_id);
-		var	leekid = __LEEK_IDS[parseInt(commande[2])];
+		index = __AI_IDS.indexOf(ia_id);
+		var leekid = __LEEK_IDS[parseInt(commande[2])];
 
 		if (index != -1) {
 			if (leekid) {
@@ -1193,7 +1197,7 @@ function useCommande(line) {
 				logout: true,
 				token: __TOKEN
 			},
-			success: function() {
+			success: function () {
 				console.log("Requête de déconnexion reçue par le serveur.");
 			}
 		});
@@ -1270,19 +1274,19 @@ function printHelp(lines) {
 }
 
 function completerId(cmd, line, hits, verify) {
-	verify = (verify) ? verify : function(id, index) {
+	verify = (verify) ? verify : function (id, index) {
 		return true;
 	};
 
 	var t = [cmd];
 	if (line.indexOf(cmd) == 0) {
-		__AI_IDS.forEach(function(id, index) {
+		__AI_IDS.forEach(function (id, index) {
 			if (!verify(id, index)) {
 				return;
 			}
 			t.push(cmd + id);
 		});
-		hits = t.filter(function(c) {
+		hits = t.filter(function (c) {
 			return c.indexOf(line) == 0;
 		});
 		if (hits.length == 0) {
@@ -1355,8 +1359,8 @@ function invasionB(b) {
 	console.log(" ");
 	for (var i = 0, value = 0; i < a.length; i++) {
 		value = a[i].toString(2).substr(1);
-    var columns = stdout.columns || 50;
-    console.log(new Array(Math.abs((columns - value.length) / 2).round()).join(" ") + value.replace(/0/g, " "));
+		var columns = stdout.columns || 50;
+		console.log(new Array(Math.abs((columns - value.length) / 2).round()).join(" ") + value.replace(/0/g, " "));
 	}
 	console.log(" ");
 }
@@ -1370,9 +1374,9 @@ var __HIDDEN_PLAY = false;
 
 function hidden(query, callback) {
 	process.openStdin();
-	var	i = 0;
+	var i = 0;
 	__HIDDEN_PLAY = true;
-	process.stdin.on("data", function(char) {
+	process.stdin.on("data", function (char) {
 		if (!__HIDDEN_PLAY) {
 			return;
 		}
@@ -1393,7 +1397,7 @@ function hidden(query, callback) {
 		}
 	});
 
-	rl.question(query, function(value) {
+	rl.question(query, function (value) {
 		rl.history = rl.history.slice(1);
 		callback(value);
 	});
@@ -1420,7 +1424,7 @@ function ajax(option) {
 	var data = (option.data) ? querystring.stringify(option.data) : "",
 		context = (option.context) ? option.context : {},
 		supplob = {
-			done: function(a) {
+			done: function (a) {
 				return (a) ? supplob.done = a : null;
 			}
 		};
@@ -1438,15 +1442,15 @@ function ajax(option) {
 		}
 	};
 
-	var req = http.request(options, function(res) {
+	var req = http.request(options, function (res) {
 		res.setEncoding("utf8");
 		var content = "";
 
-		res.on("data", function(chunk) {
+		res.on("data", function (chunk) {
 			content += chunk;
 		});
 
-		res.on("end", function() {
+		res.on("end", function () {
 			setFileContent(".temp/debug_print_r.js", print_r(res));
 			if (option.success) {
 				option.success(res, fixASCII(content), context);
@@ -1455,9 +1459,9 @@ function ajax(option) {
 		});
 	});
 
-	req.on("error", function(e) {
+	req.on("error", function (e) {
 		console.log("\033[91mProblème avec la requête : " + e.message + "\033[00m");
-		setTimeout(function() {
+		setTimeout(function () {
 			return ajax(option);
 		}, 1500);
 	});
@@ -1478,20 +1482,20 @@ function ajaxLeeKloud(path, success) {
 			"User-Agent": "NodeJS " + _Vname.split("/")
 		}
 	};
-	https.request(options, function(res) {
+	https.request(options, function (res) {
 		var c = "";
 		res.setEncoding("utf8");
-		res.on("data", function(chunk) {
+		res.on("data", function (chunk) {
 			c += chunk;
 		});
-		res.on("end", function() {
+		res.on("end", function () {
 			if (success) {
 				success(res, fixASCII(c));
 			}
 		});
-	}).on("error", function(e) {
+	}).on("error", function (e) {
 		console.log("\033[91mProblème avec la requête : " + e.message + "\033[00m");
-		setTimeout(function() {
+		setTimeout(function () {
 			return ajaxLeeKloud(path, success);
 		}, 1500);
 	}).end();
@@ -1531,7 +1535,7 @@ function mkdataCookie(cookie) {
 			key: j[0],
 			value: j[1]
 		};
-	        if (t.value === "deleted") continue;
+		if (t.value === "deleted") continue;
 		for (var i = 1; i < cookie[x].length; i++) {
 			j = cookie[x][i].split("=");
 			t[j[0]] = j[1];
@@ -1544,7 +1548,7 @@ function mkdataCookie(cookie) {
 
 function print_r(obj) {
 	var cache = [];
-	return JSON.stringify(obj, function(key, value) {
+	return JSON.stringify(obj, function (key, value) {
 		if (typeof value === "object" && value !== null) {
 			if (cache.indexOf(value) !== -1) {
 				return;
@@ -1580,26 +1584,26 @@ function launcherReadline() {
 	console.log(">> Readline : Ok.");
 
 	rl.setPrompt("> ", 2);
-	rl.on("line", function(line) {
+	rl.on("line", function (line) {
 		useCommande(line);
 		rl.prompt();
 	});
-	rl.on("close", function() {
+	rl.on("close", function () {
 		LeeKloudStop();
 	});
-	rl.on("SIGINT", function() {
+	rl.on("SIGINT", function () {
 		rl.clearLine();
-		rl.question("Es-tu sûr de vouloir éteindre le listener ? ", function(answer) {
+		rl.question("Es-tu sûr de vouloir éteindre le listener ? ", function (answer) {
 			return (answer.match(/o(ui)?/i) || answer.match(/y(es)?/i)) ? LeeKloudStop() : rl.output.write("> ");
 		});
 	});
 	rl.prompt();
 }
 
-var fu = function(type, args) {
-  var columns = process.stdout.columns || 50;
-  var length = rl.line ? rl.line.length : 50;
-  var t = Math.ceil((length + 3) / columns);
+var fu = function (type, args) {
+	var columns = process.stdout.columns || 50;
+	var length = rl.line ? rl.line.length : 50;
+	var t = Math.ceil((length + 3) / columns);
 	var text = util.format.apply(console, args);
 	rl.output.write("\n\x1B[" + t + "A\x1B[0J");
 	rl.output.write(text + "\n");
@@ -1607,22 +1611,22 @@ var fu = function(type, args) {
 	rl._refreshLine();
 };
 
-console.log = function() {
+console.log = function () {
 	fu("log", arguments);
 };
-console.warn = function() {
+console.warn = function () {
 	fu("warn", arguments);
 };
-console.info = function() {
+console.info = function () {
 	fu("info", arguments);
 };
-console.error = function() {
+console.error = function () {
 	fu("error", arguments);
 };
 
 function completer(line) {
 	var completions = __TAB_COMPLETIONS;
-	var hits = completions.filter(function(c) {
+	var hits = completions.filter(function (c) {
 		return c.indexOf(line) == 0;
 	});
 	var b = completerMore(line, hits),
@@ -1642,8 +1646,8 @@ function completer(line) {
 			if (list != "") {
 				list += ", ";
 			}
-      var columns = process.stdout.columns || 50;
-      if (((list + c).length + 4 - l) > columns) {
+			var columns = process.stdout.columns || 50;
+			if (((list + c).length + 4 - l) > columns) {
 				list += "\n";
 				l = list.length;
 			}
