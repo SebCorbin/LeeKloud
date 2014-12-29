@@ -14,12 +14,18 @@ var crypto = require('crypto'),
 	https = require('https'),
 	querystring = require('querystring'),
 	readline = require('readline'),
+	stdio = require('stdio'),
 	util = require('util');
 
 var rl = readline.createInterface({
 	input: process.stdin,
 	output: process.stdout,
 	completer: completer
+});
+
+var options = stdio.getopt({
+	'directory': {key: 'd', args: 1, description: 'The directory in which scripts are located', default: 'IA/'},
+	'extension': {key: 'e', args: 1, description: 'The extension used for leek scripts', default: '.js.lk'}
 });
 
 var $ = {
@@ -43,7 +49,7 @@ var _PLUGINS = [];
 
 var __fileload = 0;
 
-var _IAfolder = "../Alkaaran/",
+var _IAfolder = options.directory,
 	_Plugfolder = "Plugin/";
 
 var LeeKloud = null,
@@ -75,6 +81,8 @@ function main() {
 	console.log("En cas de problème contactez-moi sur le forum, ou MP HorsSujet (farmer=???).");
 	console.log("----------------------------------------------------------------------------");
 	console.log("Emplacement : \033[96m" + process.cwd() + "\033[0m");
+
+	console.log(_IAfolder);
 
 	[_IAfolder, _Plugfolder, ".temp/", ".temp/backup/"].forEach(function (dir) {
 		if (!fs.existsSync(dir)) {
@@ -169,8 +177,8 @@ function nextStep(step) {
 	if (!step && fs.existsSync(".temp/leeks")) {
 		__TOKEN = getFileContent(".temp/token");
 
-		if (process.argv.length > 2) {
-			var match = process.argv[2].match(/\[hs([0-9]+)\\]\.[A-z.]{2,9}$/);
+		if (options.args) {
+			var match = !options.args || options.args[0].match(/\[hs([0-9]+)\\]\.[A-z.]{2,9}$/);
 			__LEEK_IDS = JSON.parse(getFileContent(".temp/leeks"));
 			if (!match) {
 				console.log("Fichier invalide. N'essaye pas de me troller ! :B");
@@ -212,7 +220,7 @@ function getPlugins() {
 
 	files = files.filter(function (file) {
 		var stat = fs.statSync(_Plugfolder + file);
-		return file.substr(-3) === ".js" && stat.isFile();
+		return file.substr(-3) === '.js' && stat.isFile();
 	});
 
 	if (files.length === 0) {
@@ -371,7 +379,7 @@ function __IA(id) {
 	this.id = id;
 	this.index = __AI_IDS.indexOf(id);
 	this.name = __AI_NAMES[this.index];
-	this.filename = (this.name) ? (parseName(this.name.replace("[hs", "[ks")) + "[hs" + id + "].js") : "";
+	this.filename = (this.name) ? (parseName(this.name.replace("[hs", "[ks")) + "[hs" + id + "]" + options.extension) : "";
 
 	this.filepath = _IAfolder + this.filename;
 
